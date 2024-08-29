@@ -4,7 +4,9 @@
 ```yarn install```
 
 ## Expose env
+```
 export PK=... # private key of the account
+```
 
 ## RUN
 ### Wallet and Smart Accounts
