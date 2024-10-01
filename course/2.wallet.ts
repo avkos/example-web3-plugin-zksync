@@ -22,7 +22,7 @@ const test = async () => {
     console.log('Balance L1 before:', await wallet.getBalanceL1())
     console.log('Balance L2 before:', await wallet.getBalance())
     const depositTx = await wallet.deposit({
-        token: constants.LEGACY_ETH_ADDRESS,
+        token: constants.ETH_ADDRESS,
         to: wallet.getAddress(),
         amount: web3.utils.toWei(2,'ether'),
         refundRecipient: wallet.getAddress(),
@@ -69,7 +69,7 @@ const test = async () => {
     console.log('Balance L1 before:', await wallet.getBalanceL1(DAI_L1))
     console.log('Balance L2 before:', await wallet.getBalance(DAI_L2))
     const withdrawTokenTx = await wallet.withdraw({
-        token: constants.LEGACY_ETH_ADDRESS,
+        token: constants.ETH_ADDRESS,
         to: wallet.getAddress(),
         amount: web3.utils.toWei(2,'ether'),
     })
@@ -86,8 +86,8 @@ const test = async () => {
     console.log('Balance before:', await wallet.getBalance())
     console.log('Recipient balance before:', await recipient.getBalance())
     const transferTx = await wallet.transfer({
-        token: constants.LEGACY_ETH_ADDRESS,
-        to: recipient.address,
+        token: constants.ETH_ADDRESS,
+        to: recipient.getAddress(),
         amount: web3.utils.toWei(1,'ether'),
     });
     await transferTx.wait();
@@ -101,7 +101,7 @@ const test = async () => {
     console.log('Recipient balance before:', await recipient.getBalance(DAI_L2))
     const transferTokenTx = await wallet.transfer({
         token: DAI_L2,
-        to: recipient.address,
+        to: recipient.getAddress(),
         amount: 100,
     });
     await transferTokenTx.wait();
@@ -116,8 +116,8 @@ const test = async () => {
 
     console.log('---------Send transaction example---------')
     const populated = await wallet.populateTransaction({
-        from: richAccount.address,
-        to: recipient.address,
+        from: wallet.getAddress(),
+        to: recipient.getAddress(),
         value: 1,
     })
 
@@ -131,8 +131,8 @@ const test = async () => {
     console.log('receipt:', receipt)
 
     const signAndSendTx = await wallet.signAndSend({
-        from: richAccount.address,
-        to: recipient.address,
+        from: wallet.getAddress(),
+        to: recipient.getAddress(),
         value: 2,
     })
     const receipt2 = await signAndSendTx.wait()

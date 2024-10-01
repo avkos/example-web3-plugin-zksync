@@ -33,7 +33,7 @@ const test = async () => {
     );
     const owner1 = new web3.ZKsync.Wallet(richAccount.privateKey);
     const owner2 = web3.ZKsync.Wallet.createRandom();
-    const multisigContract = await factory.deploy([owner1.address, owner2.address]);
+    const multisigContract = await factory.deploy([owner1.getAddress(), owner2.getAddress()]);
     const multisigAddress = multisigContract.options.address as Address;
     console.log('Multisig address:', multisigAddress);
     console.log('Refill Multisig account')
@@ -47,7 +47,7 @@ const test = async () => {
     console.log('Refill owner2 account')
     await (
         await deployer.sendTransaction({
-            to: owner2.address,
+            to: owner2.getAddress(),
             value: web3.utils.toWei('1', 'ether'),
         })
     ).wait();
@@ -66,7 +66,7 @@ const test = async () => {
     console.log('Recipient balance before:',await recipient.getBalance())
     const tx = await multiSigAccount.transfer({
         token: ETH_ADDRESS,
-        to: recipient.address,
+        to: recipient.getAddress(),
         amount: amount,
     });
     const receipt = await tx.wait();

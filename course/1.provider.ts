@@ -9,13 +9,13 @@ const test = async () => {
     const l2TokenAddress = await l2Provider.l2TokenAddress(DAI_L1)
     console.log('l2TokenAddress:', l2TokenAddress)
 
-    console.log('getBalance:', await l2Provider.getBalance(richAccount.address))
-    console.log('getBalance of the DAI token:', await l2Provider.getBalance(richAccount.address, 'latest', l2TokenAddress))
-    console.log('getBalance of the DAI token (2):', await l2Provider.getTokenBalance(l2TokenAddress, richAccount.address ))
+    console.log('getBalance:', await l2Provider.getBalance(web3Account.address))
+    console.log('getBalance of the DAI token:', await l2Provider.getBalance(web3Account.address, 'latest', l2TokenAddress))
+    console.log('getBalance of the DAI token (2):', await l2Provider.getTokenBalance(l2TokenAddress, web3Account.address ))
 
 
     const populated = await l2Provider.populateTransaction({
-        from: richAccount.address,
+        from: web3Account.address,
         to: l2Provider.eth.accounts.create().address,
         value: 1,
     })

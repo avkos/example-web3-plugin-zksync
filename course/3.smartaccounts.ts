@@ -17,7 +17,7 @@ const test = async () => {
     console.log('---------Withdraw example---------')
     console.log('Balance before:', await smartAccount.getBalance())
     const withdrawTx = await smartAccount.withdraw({
-        token: constants.LEGACY_ETH_ADDRESS,
+        token: constants.ETH_ADDRESS,
         to: smartAccount.getAddress(),
         amount: web3.utils.toWei(2,'ether'),
     })
@@ -43,8 +43,8 @@ const test = async () => {
     console.log('Balance before:', await smartAccount.getBalance())
     console.log('Recipient balance before:', await recipient.getBalance())
     const transferTx = await smartAccount.transfer({
-        token: constants.LEGACY_ETH_ADDRESS,
-        to: recipient.address,
+        token: constants.ETH_ADDRESS,
+        to: recipient.getAddress(),
         amount: web3.utils.toWei(1,'ether'),
     });
     await transferTx.wait();
@@ -56,7 +56,7 @@ const test = async () => {
     console.log('Recipient balance before:', await recipient.getBalance(DAI_L2))
     const transferTokenTx = await smartAccount.transfer({
         token: DAI_L2,
-        to: recipient.address,
+        to: recipient.getAddress(),
         amount: web3.utils.toWei(1,'ether'),
     });
     await transferTokenTx.wait();
@@ -69,8 +69,8 @@ const test = async () => {
 
     console.log('---------Send transaction example---------')
     const populated = await smartAccount.populateTransaction({
-        from: richAccount.address,
-        to: recipient.address,
+        from: smartAccount.getAddress(),
+        to: recipient.getAddress(),
         value: 1,
     })
     console.log('Populated:', populated)
