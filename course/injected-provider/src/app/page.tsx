@@ -45,7 +45,7 @@ export default function Home() {
         const tx = {
             from: mainAccount,
             to: randAcc.address,
-            amount: web3.utils.toWei('0.00001', 'ether'),
+            value: web3.utils.toWei('0.00001', 'ether'),
         }
         const populated = await web3.ZKsync.L2.populateTransaction(tx)
         console.log('populated', populated)

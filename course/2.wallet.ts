@@ -24,10 +24,10 @@ const test = async () => {
     const depositTx = await wallet.deposit({
         token: constants.ETH_ADDRESS,
         to: wallet.getAddress(),
-        amount: web3.utils.toWei(2,'ether'),
+        amount: web3.utils.toWei(2, 'ether'),
         refundRecipient: wallet.getAddress(),
     })
-    console.log('transaction hash: ',depositTx.hash)
+    console.log('transaction hash: ', depositTx.hash)
     await depositTx.waitFinalize() // <== can be long in real networks.
     console.log('Balance L1 before after:', await wallet.getBalanceL1())
     console.log('Balance L2 before after:', await wallet.getBalance())
@@ -43,11 +43,10 @@ const test = async () => {
         approveERC20: true,
         refundRecipient: wallet.getAddress(),
     })
-    console.log('transaction hash: ',depositTokenTx.hash)
+    console.log('transaction hash: ', depositTokenTx.hash)
     await depositTokenTx.waitFinalize() // <== can be long in real networks.
     console.log('Balance L1 before after:', await wallet.getBalanceL1(DAI_L1))
     console.log('Balance L2 before after:', await wallet.getBalance(DAI_L2))
-
 
 
     console.log('---------Withdraw example---------')
@@ -56,13 +55,13 @@ const test = async () => {
     const withdrawTx = await wallet.withdraw({
         token: DAI_L2,
         to: wallet.getAddress(),
-        amount: web3.utils.toWei(2,'ether'),
+        amount: web3.utils.toWei(2, 'ether'),
     })
-    console.log('transaction hash: ',withdrawTx.hash)
-    await withdrawTx.waitFinalize() // <== can be long in real networks.
+    console.log('transaction hash: ', withdrawTx.hash)
+    const tx1 = await withdrawTx.waitFinalize() // <== can be long in real networks.
+    await wallet.finalizeWithdrawal(tx1.transactionHash)
     console.log('Balance L1 after:', await wallet.getBalanceL1())
     console.log('Balance L2 after:', await wallet.getBalance())
-
 
 
     console.log('---------Withdraw token example---------')
@@ -71,13 +70,13 @@ const test = async () => {
     const withdrawTokenTx = await wallet.withdraw({
         token: constants.ETH_ADDRESS,
         to: wallet.getAddress(),
-        amount: web3.utils.toWei(2,'ether'),
+        amount: web3.utils.toWei(2, 'ether'),
     })
-    console.log('transaction hash: ',withdrawTokenTx.hash)
-    await withdrawTokenTx.waitFinalize() // <== can be long in real networks.
+    console.log('transaction hash: ', withdrawTokenTx.hash)
+    const tx2 = await withdrawTokenTx.waitFinalize() // <== can be long in real networks.
+    await wallet.finalizeWithdrawal(tx2.transactionHash)
     console.log('Balance L1 after:', await wallet.getBalanceL1(DAI_L1))
     console.log('Balance L2 after:', await wallet.getBalance(DAI_L2))
-
 
 
     console.log('---------Transfer example---------')
@@ -88,12 +87,11 @@ const test = async () => {
     const transferTx = await wallet.transfer({
         token: constants.ETH_ADDRESS,
         to: recipient.getAddress(),
-        amount: web3.utils.toWei(1,'ether'),
+        amount: web3.utils.toWei(1, 'ether'),
     });
     await transferTx.wait();
     console.log('Balance after:', await wallet.getBalance())
     console.log('Recipient balance after:', await recipient.getBalance())
-
 
 
     console.log('---------Transfer token example---------')
@@ -109,9 +107,7 @@ const test = async () => {
     console.log('Recipient balance after:', await recipient.getBalance(DAI_L2))
 
 
-    console.log('All balances',await wallet.getAllBalances())
-
-
+    console.log('All balances', await wallet.getAllBalances())
 
 
     console.log('---------Send transaction example---------')
